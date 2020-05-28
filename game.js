@@ -11,6 +11,7 @@ dir = 0,
 score = 0,
 player = null,
 food = null;
+
 window.requestAnimationFrame = (function () {
 return window.requestAnimationFrame ||
 window.mozRequestAnimationFrame ||
@@ -20,16 +21,17 @@ window.setTimeout(callback, 17);
 };
 }());
 document.addEventListener('keydown', function (evt) {
-    lastPress = evt.which;
-    }, false);
-    function Rectangle(x, y, width, height) {
-    this.x = (x == null) ? 0 : x;
-    this.y = (y == null) ? 0 : y;
+lastPress = evt.which;
+}, false);
+
+function Rectangle(x, y, width, height) {
+this.x = (x == null) ? 0 : x;
+this.y = (y == null) ? 0 : y;
 this.width = (width == null) ? 0 : width;
 this.height = (height == null) ? this.width : height;
 this.intersects = function (rect) {
 if (rect == null) {
-window.console.warn('Missing parameters on function intersects');
+window.console.warn('Faltan parámetros en las intersecciones de funciones');
 } else {
 return (this.x < rect.x + rect.width &&
 this.x + this.width > rect.x &&
@@ -39,7 +41,7 @@ this.y + this.height > rect.y);
 };
 this.fill = function (ctx) {
 if (ctx == null) {
-window.console.warn('Missing parameters on function fill');
+window.console.warn('Faltan parámetros en función de relleno');
 } else {
 ctx.fillRect(this.x, this.y, this.width, this.height);
 }
@@ -48,32 +50,34 @@ ctx.fillRect(this.x, this.y, this.width, this.height);
 
 function random(max) {
     return Math.floor(Math.random() * max);
-    }
-    function paint(ctx) {
-    // Clean canvas
+}
+
+function paint(ctx) {
+    // Limpiar canvas
     ctx.fillStyle = '#000';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    // Draw player
-    ctx.fillStyle = '#0f0';
+    // Dibujar jugador
+    ctx.fillStyle = 'rgba(0, 255, 0, 0.877)';
     player.fill(ctx);
-    // Draw food
-    ctx.fillStyle = '#f00';
+    // Dibujar alimento
+    ctx.fillStyle = 'rgba(245, 63, 63, 0.877)';
     food.fill(ctx);
-    // Debug last key pressed
-    ctx.fillStyle = '#fff';
+    // Depuración de la última tecla presionada
+    ctx.fillStyle = 'rgb(85, 215, 255)';
     //ctx.fillText('Last Press: '+lastPress,0,20);
-    // Draw score
-    ctx.fillText('Score: ' + score, 0, 10);
-    // Draw pause
-if (pause) {
+    // Dibujar puntaje
+    ctx.fillText('Puntaje: ' + score, 0, 10);
+    // Dibujar pausa
+    if (pause) {
     ctx.textAlign = 'center';
-    ctx.fillText('PAUSE', 150, 75);
+    ctx.fillText('PAUSA', 150, 75);
     ctx.textAlign = 'left';
     }
-    }
+}
+
 function act() {
     if (!pause) {
-    // Change Direction
+    // Cambiar direccion
     if (lastPress == KEY_UP) {
     dir = 0;
     }
@@ -85,9 +89,9 @@ function act() {
     }
     if (lastPress == KEY_LEFT) {
     dir = 3;
-}
-// Move Rect
-if (dir == 0) {
+    }
+    // Mover rectangulo
+    if (dir == 0) {
     player.y -= 10;
     }
     if (dir == 1) {
@@ -99,7 +103,7 @@ if (dir == 0) {
     if (dir == 3) {
     player.x -= 10;
     }
-    // Out Screen
+    // Fuera de la pantalla
     if (player.x > canvas.width) {
     player.x = 0;
     }
@@ -112,36 +116,40 @@ if (dir == 0) {
     if (player.y < 0) {
     player.y = canvas.height;
     }
-    // Food Intersects
-if (player.intersects(food)) {
+    // Intersecciones de alimentos
+    if (player.intersects(food)) {
     score += 1;
     food.x = random(canvas.width / 10 - 1) * 10;
     food.y = random(canvas.height / 10 - 1) * 10;
     }
     }
-    // Pause/Unpause
+    // Pausa / Sin pausa
     if (lastPress == KEY_ENTER) {
     pause = !pause;
     lastPress = null;
     }
     }
-function repaint() {
-    window.requestAnimationFrame(repaint);
-    paint(ctx);
-}
-function run() {
-    setTimeout(run, 50);
-    act();
+
+    function repaint() {
+        window.requestAnimationFrame(repaint);
+        paint(ctx);
     }
-function init() {
-    // Get canvas and context
-    canvas = document.getElementById('canvas');
-    ctx = canvas.getContext('2d');
-    // Create player and food
-    player = new Rectangle(40, 40, 10, 10);
-    food = new Rectangle(80, 80, 10, 10);
-    // Start game
-    run();
-    repaint();
-}
-    window.addEventListener('load', init, false);
+
+    function run() {
+        setTimeout(run, 50);
+        act();
+    }
+
+    function init() {
+        // Obtener canvas y contexto
+        canvas = document.getElementById('canvas');
+        ctx = canvas.getContext('2d');
+        // Creacion del jugador y el alimento
+        player = new Rectangle(40, 40, 10, 10);
+        food = new Rectangle(80, 80, 10, 10);
+        // Comenzar el juego
+        run();
+        repaint();
+        }
+
+        window.addEventListener('load', init, false);

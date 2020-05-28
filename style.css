@@ -1,14 +1,18 @@
 body{
-    background-color: rgb(112, 192, 230);
+    background-color: rgba(140, 245, 126, 0.836);
 }
 canvas {
-    width: 300px;
-    height:  150px;
+    width: 350px;
+    height:  200px;
     background: #999;
+    position: relative;
+    left: 550px;
+    top: 50px;
 }
 
 h1{
+    margin-left: 15px;
     color: rgb(228, 40, 40);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    margin-left: 15px;
+    text-align: center;
 }
