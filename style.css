@@ -1,5 +1,14 @@
+body{
+    background-color: rgb(112, 192, 230);
+}
 canvas {
     width: 300px;
     height:  150px;
     background: #999;
+}
+
+h1{
+    color: rgb(228, 40, 40);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-left: 15px;
 }
